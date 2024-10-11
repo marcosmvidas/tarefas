@@ -3,21 +3,34 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TarefaController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+// Rota de login
+// Rota de login
+Route::post('/login', function (Request $request) {
+    $credentials = $request->only('email', 'password');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        $token = $user->createToken('eSocial')->plainTextToken;
+
+        return response()->json(['token' => $token]);
+    }
+
+    return response()->json(['message' => 'Unauthorized'], 401);
 });
 
-// Route::apiResource('tarefa', TarefaController::class);
-Route::apiResource('tarefa', TarefaController::class);
+
+// Agrupando rotas que exigem autenticação
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('user', UserController::class);
+    Route::apiResource('tarefa', TarefaController::class);
+});
+
+
+
+// Caso precisar de uma rota pública, ficará fora do agrupamento
+Route::get('/public-route', function () {
+    return response()->json(['message' => 'Esta é uma rota pública']);
+});

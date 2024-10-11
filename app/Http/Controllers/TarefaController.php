@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Tarefa;
+use App\Services\TarefaService;
 
 use Illuminate\Http\Request;
 
 class TarefaController extends Controller
 {
+    protected $tarefaService;
+
+    public function __construct(TarefaService $tarefaService)
+    {
+        $this->tarefaService = $tarefaService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tarefas = Tarefa::all();
-
-        return response()->json($tarefas);
+        return response()->json($this->tarefaService->getAllTarefas());
     }
 
     /**
@@ -30,22 +37,14 @@ class TarefaController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'tarefa' => 'required|string|max:255',
-            'descricao' => 'required|string',
-            'responsavel' => 'required|string|max:255',
-            'tipo_desenvolvimento' => 'required|in:Backend,Frontend,Banco de dados,Infra',
-            'nivel_dificuldade' => 'required|in:Difícil,Moderada,Fácil,Intermediária',
-            'status' => 'in:Aberta,Fechada,Cancelada',
-            'conclusao_em' => 'nullable|date',
-            'concluida' => 'boolean',
-        ]);
+        if (!$request->user()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
-        $tarefa = Tarefa::create($validatedData);
+        $tarefa = $this->tarefaService->createTarefa($request->all(), $request->user()->id);
 
         return response()->json($tarefa, 201);
     }
-
 
     /**
      * Display the specified resource.
@@ -58,7 +57,7 @@ class TarefaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         //
     }
@@ -68,7 +67,20 @@ class TarefaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (!$request->user()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $tarefa = Tarefa::find($id);
+
+        if (!$tarefa) {
+            return response()->json(['message' => 'Tarefa não encontrada'], 404);
+        }
+
+        $updateTarefa = $this->tarefaService->updateTarefa($tarefa, $request->all());
+
+        return response()->json($updateTarefa, 200);
+
     }
 
     /**
