@@ -1,20 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Tarefa;
 
 use Illuminate\Http\Request;
 
-class TarefaController extends Controller
+class UserController extends Controller
 {
+        /**
+     * @OA\Get(
+     *     tags={"Admin - Banners"},
+     *     summary="Retornar uma lista de banners",
+     *     description="Retornar os objetos dos banners",
+     *     path="/api/v1/banner",
+     *     @OA\Response(response="200", description="Uma lista com banners"),
+     *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
+     *     @OA\Response(response="500", description="Erro interno do servidor")
+     * ),
+     *
+     */
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tarefas = Tarefa::all();
-
-        return response()->json($tarefas);
+        //
     }
 
     /**
@@ -30,22 +40,8 @@ class TarefaController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'tarefa' => 'required|string|max:255',
-            'descricao' => 'required|string',
-            'responsavel' => 'required|string|max:255',
-            'tipo_desenvolvimento' => 'required|in:Backend,Frontend,Banco de dados,Infra',
-            'nivel_dificuldade' => 'required|in:Difícil,Moderada,Fácil,Intermediária',
-            'status' => 'in:Aberta,Fechada,Cancelada',
-            'conclusao_em' => 'nullable|date',
-            'concluida' => 'boolean',
-        ]);
-
-        $tarefa = Tarefa::create($validatedData);
-
-        return response()->json($tarefa, 201);
+        //
     }
-
 
     /**
      * Display the specified resource.
