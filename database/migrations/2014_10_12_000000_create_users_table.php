@@ -18,10 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->enum('role', ['gestor', 'usuario'])->default('usuario');
             $table->timestamps();
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+
         });
     }
 

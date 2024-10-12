@@ -6,9 +6,12 @@ use App\Http\Controllers\TarefaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
-// Rota de login
-// Rota de login
 Route::post('/login', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string|min:8',
+    ]);
+
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
