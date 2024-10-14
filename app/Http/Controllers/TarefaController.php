@@ -90,4 +90,41 @@ class TarefaController extends Controller
     {
         //
     }
+
+     /**
+     * Retorna a estrutura de campos para o frontend montar o formulário.
+     */
+    public function formStructure()
+    {
+        $formStructure = [
+            [
+                'name' => 'tarefa',
+                'label' => 'Tarefa',
+                'type' => 'text',
+                'required' => true,
+            ],
+            [
+                'name' => 'status',
+                'label' => 'Status',
+                'type' => 'select',
+                'options' => ['Aberta', 'Em andamento', 'Fechada', 'Cancelada'],
+                'required' => true,
+            ],
+            [
+                'name' => 'responsavel',
+                'label' => 'Responsável',
+                'type' => 'text',
+                'required' => true,
+            ],
+            [
+                'name' => 'data_conclusao',
+                'label' => 'Data de Conclusão',
+                'type' => 'date',
+                'required' => true,
+            ]
+        ];
+
+        return response()->json($formStructure);
+    }
+
 }

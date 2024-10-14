@@ -23,8 +23,8 @@ class TarefaService
             'descricao' => 'required|string',
             'responsavel' => 'required|string|max:255',
             'tipo_desenvolvimento' => 'required|in:Backend,Frontend,Banco de dados,Infra',
-            'nivel_dificuldade' => 'required|in:Difícil,Moderada,Fácil,Intermediária',
-            'status' => 'in:Aberta,Fechada,Cancelada',
+            'nivel_dificuldade' => 'required|in:Difícil,Moderada,Fácil,Complexa,Intermediária',
+            'status' => 'in:Aberta,Em andamento,Fechada,Cancelada',
             'conclusao_em' => 'nullable|date',
             'concluida' => 'boolean',
         ])->validate();

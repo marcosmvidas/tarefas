@@ -77,7 +77,7 @@ class TarefaServiceTest extends TestCase
         $data = [
             'tarefa' => 'Tarefa atualizada',
             'descricao' => 'Descrição atualizada',
-            'responsavel' => 'Jane Doe',
+            'responsavel' => 'João Damasceno',
             'tipo_desenvolvimento' => 'Frontend',
             'nivel_dificuldade' => 'Fácil',
             'status' => 'Fechada',
@@ -91,7 +91,7 @@ class TarefaServiceTest extends TestCase
         $this->assertDatabaseHas('tarefas', [
             'tarefa' => 'Tarefa atualizada',
             'descricao' => 'Descrição atualizada',
-            'responsavel' => 'Jane Doe',
+            'responsavel' => 'João Damasceno',
             'tipo_desenvolvimento' => 'Frontend',
             'nivel_dificuldade' => 'Fácil',
             'status' => 'Fechada',

@@ -28,6 +28,10 @@ Route::post('/login', function (Request $request) {
 // Agrupando rotas que exigem autenticação
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('user', UserController::class);
+
+    // Rota personalizada para retornar a estrutura do formulário
+    Route::get('/tarefa/form-structure', [TarefaController::class, 'formStructure']);
+    // Rotas padrão de API para o CRUD de tarefas
     Route::apiResource('tarefa', TarefaController::class);
 });
 
