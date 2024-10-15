@@ -64,3 +64,70 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Novas Funcionalidades
+
+- **Autenticação de Usuário**: Registro, login e logout de usuários.
+- **Gerenciamento de Tarefas**: CRUD (Criar, Ler, Atualizar, Excluir) para tarefas.
+- **Gerenciamento de Usuários**: CRUD para usuários e roles.
+- **Middleware de CORS**: Suporte a requisições cross-origin.
+
+## Tecnologias Utilizadas
+
+- **Framework**: Laravel
+- **Banco de Dados**: MySQL
+- **Autenticação**: Laravel Passport (ou Laravel Sanctum, conforme utilizado)
+# eSocial Brasil - Backend
+
+Este repositório contém a API backend do projeto eSocial Brasil, desenvolvido em Laravel. A API gerencia as operações relacionadas aos usuários e tarefas.
+
+## Funcionalidades
+
+- **Autenticação de Usuário**: Registro, login e logout de usuários.
+- **Gerenciamento de Tarefas**: CRUD (Criar, Ler, Atualizar, Excluir) para tarefas.
+- **Gerenciamento de Usuários**: CRUD para usuários e roles.
+- **Middleware de CORS**: Suporte a requisições cross-origin.
+
+## Tecnologias Utilizadas
+
+- **Framework**: Laravel
+- **Banco de Dados**: MySQL
+- **Autenticação**: Laravel Passport (ou Laravel Sanctum, conforme utilizado)
+
+## Pré-requisitos
+
+- [Composer](https://getcomposer.org/) para gerenciar dependências.
+- [PHP](https://www.php.net/) (versão 8.1 ou superior).
+- [MySQL](https://www.mysql.com/) ou outro banco de dados suportado.
+
+## Instalação
+
+1. Clone o repositório:
+
+   git clone <https://github.com/marcosmvidas/tarefa.git>
+   cd backend
+
+   composer install
+   cp .env.example .env
+   php artisan key:generate
+
+   Instale as dependências:
+   Copiar código
+   composer install
+   Crie o arquivo .env e configure suas variáveis de ambiente:
+
+   Copiar código
+   cp .env.example .env
+   Gere a chave de aplicação:
+
+   Copiar código
+   php artisan key:generate
+   Execute as migrações:
+
+   Copiar código
+   php artisan migrate
+   Inicie o servidor:
+
+   Copiar código
+   php artisan serve

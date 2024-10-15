@@ -24,4 +24,10 @@ class Tarefa extends Model
         'conclusao_em',
         'concluida',
     ];
+
+    // relacionamento com o modelo User
+    public function nomeResponsavel()
+    {
+        return $this->belongsTo(User::class, 'responsavel');
+    }
 }

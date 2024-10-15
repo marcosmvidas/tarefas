@@ -18,7 +18,7 @@ Route::post('/login', function (Request $request) {
         $user = Auth::user();
         $token = $user->createToken('eSocial')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token, 'role_id' => $user->role_id]);
     }
 
     return response()->json(['message' => 'Unauthorized'], 401);

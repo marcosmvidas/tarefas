@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Role;
 
 class RolesTableSeeder extends Seeder
 {
@@ -12,9 +12,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('roles')->insert([
-            ['name' => 'gestor'],
-            ['name' => 'usuario'],
-        ]);
+        // Utilizando firstOrCreate para evitar duplicações
+        Role::firstOrCreate(['name' => 'gestor']);
+        Role::firstOrCreate(['name' => 'usuario']);
     }
 }

@@ -32,7 +32,7 @@ class TarefaService
 
     public function getAllTarefas()
     {
-        return Tarefa::all();
+        return Tarefa::with('nomeResponsavel')->get();
     }
 
     public function updateTarefa(Tarefa $tarefa, $data)
