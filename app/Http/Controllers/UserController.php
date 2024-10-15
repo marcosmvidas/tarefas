@@ -9,10 +9,10 @@ class UserController extends Controller
 {
         /**
      * @OA\Get(
-     *     tags={"Admin - Banners"},
+     *     tags={"Admin - User"},
      *     summary="Retornar uma lista de banners",
      *     description="Retornar os objetos dos banners",
-     *     path="/api/v1/banner",
+     *     path="/api/user",
      *     @OA\Response(response="200", description="Uma lista com banners"),
      *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
      *     @OA\Response(response="500", description="Erro interno do servidor")
