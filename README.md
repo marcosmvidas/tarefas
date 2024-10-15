@@ -131,3 +131,18 @@ Este repositório contém a API backend do projeto eSocial Brasil, desenvolvido 
 
    Copiar código
    php artisan serve
+
+  ## Endpoint: POST /api/register
+    {
+        "name": "Nome do Usuário",
+        "email": "email@example.com",
+        "password": "senha123", 
+        "password_confirmation": "senha123"
+    }
+
+
+  ## Endpoint: POST /api/login
+    {
+        "email": "email@example.com",
+        "password": "senha123"
+    }
