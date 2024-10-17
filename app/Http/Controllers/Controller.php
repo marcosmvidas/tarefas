@@ -21,10 +21,17 @@ use Illuminate\Routing\Controller as BaseController;
  *      )
  *  )
  *
- *  @OA\Get(
+ * @OA\Get(
  *      path="/",
  *      description="Home page",
  *      @OA\Response(response="default", description="Benvindo ao site")
+ * )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
  * )
  *
  *

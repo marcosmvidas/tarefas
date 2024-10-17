@@ -23,9 +23,14 @@ class TarefaService
         ]));
     }
 
-    public function getAllTarefas()
+    public function getTarefas($perPage)
     {
-        return Tarefa::with('nomeResponsavel')->get();
+        if ($perPage === 'all') {
+            return Tarefa::with('nomeResponsavel')->get();
+        }
+
+        return Tarefa::with('nomeResponsavel')->paginate($perPage);
+
     }
 
     public function updateTarefa(Tarefa $tarefa, $data)
@@ -37,4 +42,5 @@ class TarefaService
 
         return $tarefa;
     }
+
 }

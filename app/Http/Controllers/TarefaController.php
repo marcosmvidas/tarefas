@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\Tarefa;
+use App\Models\Tarefa;
 use App\Services\TarefaService;
 use App\Services\HistoricoRegistroService;
 use Illuminate\Http\Request;
@@ -30,10 +30,13 @@ class TarefaController extends Controller
      * ),
      *
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $tarefas = $this->tarefaService->getAllTarefas();
+            $perPage = $request->get('per_page', 10);
+
+            $tarefas = $this->tarefaService->getTarefas($perPage);
+
             return response()->json($tarefas, 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erro ao buscar tarefas: ' . $e->getMessage()], 500);
