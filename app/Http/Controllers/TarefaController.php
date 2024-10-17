@@ -4,66 +4,68 @@ namespace App\Http\Controllers;
 
 use App\Models\Tarefa;
 use App\Services\TarefaService;
-
+use App\Services\HistoricoRegistroService;
 use Illuminate\Http\Request;
 
 class TarefaController extends Controller
 {
     protected $tarefaService;
+    protected $historicoService;
 
-    public function __construct(TarefaService $tarefaService)
+    public function __construct(TarefaService $tarefaService, HistoricoRegistroService $historicoService)
     {
         $this->tarefaService = $tarefaService;
+        $this->historicoService = $historicoService;
     }
 
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     tags={"Admin - Tarefas"},
+     *     summary="Retornar uma lista de banners",
+     *     description="Retornar os objetos dos banners",
+     *     path="/api/tarefa",
+     *     @OA\Response(response="200", description="Uma lista com banners"),
+     *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
+     *     @OA\Response(response="500", description="Erro interno do servidor")
+     * ),
+     *
      */
     public function index()
     {
-        return response()->json($this->tarefaService->getAllTarefas());
+        try {
+            $tarefas = $this->tarefaService->getAllTarefas();
+            return response()->json($tarefas, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao buscar tarefas: ' . $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if (!$request->user()) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $tarefa = $this->tarefaService->createTarefa($request->all(), $request->user()->id);
-
-        return response()->json($tarefa, 201);
+        try {
+            $tarefa = $this->tarefaService->createTarefa($request->all(), $request->user()->id);
+            $this->historicoService->registrarCriacao('Tarefa', $tarefa->id, $request->user()->id, $tarefa->toArray());
+            return response()->json($tarefa, 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao criar tarefa: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     tags={"Admin - Tarefas"},
+     *     summary="Retornar uma lista de banners",
+     *     description="Retornar os objetos dos banners",
+     *     path="/api/tarefa/{id}",
+     *     @OA\Response(response="200", description="Uma lista com banners"),
+     *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
+     *     @OA\Response(response="500", description="Erro interno do servidor")
+     * ),
+     *
      */
     public function update(Request $request, string $id)
     {
@@ -71,60 +73,35 @@ class TarefaController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $tarefa = Tarefa::find($id);
+        try {
+            $tarefa = Tarefa::find($id);
+            if (!$tarefa) {
+                return response()->json(['message' => 'Tarefa não encontrada'], 404);
+            }
 
-        if (!$tarefa) {
-            return response()->json(['message' => 'Tarefa não encontrada'], 404);
+            $oldData = $tarefa->toArray();
+            $updatedTarefa = $this->tarefaService->updateTarefa($tarefa, $request->all());
+            $this->historicoService->registrarAtualizacao('Tarefa', $tarefa->id, $request->user()->id, $oldData, $updatedTarefa->toArray());
+            return response()->json($updatedTarefa, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao atualizar tarefa: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function show(Request $request, string $id)
+    {
+        if (!$request->user()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $updateTarefa = $this->tarefaService->updateTarefa($tarefa, $request->all());
-
-        return response()->json($updateTarefa, 200);
-
+        try {
+            $tarefa = Tarefa::find($id);
+            if (!$tarefa) {
+                return response()->json(['message' => 'Tarefa não encontrada'], 404);
+            }
+            return response()->json($tarefa, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao buscar tarefa: ' . $e->getMessage()], 500);
+        }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-     /**
-     * Retorna a estrutura de campos para o frontend montar o formulário.
-     */
-    public function formStructure()
-    {
-        $formStructure = [
-            [
-                'name' => 'tarefa',
-                'label' => 'Tarefa',
-                'type' => 'text',
-                'required' => true,
-            ],
-            [
-                'name' => 'status',
-                'label' => 'Status',
-                'type' => 'select',
-                'options' => ['Aberta', 'Em andamento', 'Fechada', 'Cancelada'],
-                'required' => true,
-            ],
-            [
-                'name' => 'responsavel',
-                'label' => 'Responsável',
-                'type' => 'text',
-                'required' => true,
-            ],
-            [
-                'name' => 'data_conclusao',
-                'label' => 'Data de Conclusão',
-                'type' => 'date',
-                'required' => true,
-            ]
-        ];
-
-        return response()->json($formStructure);
-    }
-
 }

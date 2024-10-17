@@ -23,6 +23,8 @@ class Tarefa extends Model
         'status',
         'conclusao_em',
         'concluida',
+        'created_at',
+        'updated_at'
     ];
 
     // relacionamento com o modelo User

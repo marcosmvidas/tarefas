@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-        /**
+    /**
      * @OA\Get(
      *     tags={"Admin - User"},
      *     summary="Retornar uma lista de banners",

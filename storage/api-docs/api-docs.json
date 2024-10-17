@@ -24,6 +24,54 @@
                     }
                 }
             }
+        },
+        "/api/tarefa": {
+            "get": {
+                "tags": [
+                    "Admin - Tarefas"
+                ],
+                "summary": "Retornar uma lista de banners",
+                "description": "Retornar os objetos dos banners",
+                "operationId": "a79e012fce138fc62b731aae394afd11",
+                "responses": {
+                    "200": {
+                        "description": "Uma lista com banners"
+                    },
+                    "404": {
+                        "description": "Nenhuma lista de banners encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/api/tarefa/{id}": {
+            "put": {
+                "tags": [
+                    "Admin - Tarefas"
+                ],
+                "summary": "Retornar uma lista de banners",
+                "description": "Retornar os objetos dos banners",
+                "operationId": "67cd449521a31562fafdca4c490d2ef8",
+                "responses": {
+                    "200": {
+                        "description": "Uma lista com banners"
+                    },
+                    "404": {
+                        "description": "Nenhuma lista de banners encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Admin - Tarefas",
+            "description": "Admin - Tarefas"
+        }
+    ]
 }
