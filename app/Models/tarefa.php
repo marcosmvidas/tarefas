@@ -27,7 +27,6 @@ class Tarefa extends Model
         'updated_at'
     ];
 
-    // relacionamento com o modelo User
     public function nomeResponsavel()
     {
         return $this->belongsTo(User::class, 'responsavel');

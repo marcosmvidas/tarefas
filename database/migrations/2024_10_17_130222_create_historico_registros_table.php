@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('model_name');
             $table->bigInteger('record_id');
-            $table->unsignedBigInteger('user_id')->nullable(); // Usando unsigned aqui
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('action');
             $table->text('changes')->nullable();
             $table->timestamps();
 
-            // A referência deve ser para a tabela correta e a chave correta
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

@@ -2,8 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TarefaController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ {
+    UserController,
+    TarefaController,
+    HistoricoRegistroController
+};
 use Illuminate\Support\Facades\Auth;
 
 Route::post('/login', function (Request $request) {
@@ -35,8 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Rota personalizada para retornar a estrutura do formulário
     Route::get('/tarefa/form-structure', [TarefaController::class, 'formStructure']);
+
     // Rotas padrão de API para o CRUD de tarefas
     Route::apiResource('tarefa', TarefaController::class);
+    Route::apiResource('historico', HistoricoRegistroController::class);
 });
 
 

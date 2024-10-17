@@ -25,6 +25,16 @@ class HistoricoRegistroService
         $this->registrarHistorico('deleted', $modelName, $recordId, $userId, $data);
     }
 
+    public function getAllRegistros()
+    {
+        return HistoricoRegistro::all();
+    }
+
+    public function getRegistroById($id)
+    {
+        return HistoricoRegistro::find($id);
+    }
+
     private function registrarHistorico($action, $modelName, $recordId, $userId, $data)
     {
         HistoricoRegistro::create([

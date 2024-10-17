@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tarefa;
+// use App\Models\Tarefa;
 use App\Services\TarefaService;
 use App\Services\HistoricoRegistroService;
 use Illuminate\Http\Request;
