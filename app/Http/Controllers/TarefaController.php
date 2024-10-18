@@ -20,12 +20,12 @@ class TarefaController extends Controller
 
     /**
      * @OA\Get(
-     *     tags={"Admin - Tarefas"},
-     *     summary="Retornar uma lista de banners",
-     *     description="Retornar os objetos dos banners",
+     *     tags={"Tarefa"},
+     *     summary="Retornar uma lista das tarefas",
+     *     description="Retornar os objetos dos tarefas",
      *     path="/api/tarefa",
-     *     @OA\Response(response="200", description="Uma lista com banners"),
-     *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
+     *     @OA\Response(response="200", description="Uma lista com tarefas"),
+     *     @OA\Response(response="404", description="Nenhuma lista de tarefas encontrada"),
      *     @OA\Response(response="500", description="Erro interno do servidor")
      * ),
      *
@@ -60,17 +60,99 @@ class TarefaController extends Controller
 
     /**
      * @OA\Put(
-     *     tags={"Admin - Tarefas"},
-     *     summary="Retornar uma lista de banners",
-     *     description="Retornar os objetos dos banners",
+     *     tags={"Tarefa"},
+     *     summary="Edita uma tarefa",
+     *     description="Retornar os objetos da tarefa",
      *     path="/api/tarefa/{id}",
-     *     @OA\Response(response="200", description="Uma lista com banners"),
-     *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
-     *     @OA\Response(response="500", description="Erro interno do servidor")
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id da tarefa",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="integer",
+     *              format="int64",
+     *         ),
+     *     ),
+     *     @OA\Parameter(
+     *         name="descricao",
+     *         in="query",
+     *         description="Descrição da tarefa",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="string",
+     *              format="str",
+     *         ),
+     *     ),
+     *     @OA\Parameter(
+     *             name="tipo_desenvolvimento",
+     *             in="query",
+     *             description="Tipo de desenvolvimento",
+     *             required=true,
+     *             @OA\Schema(
+     *                  type="string",
+     *                  enum={"Backend", "Frontend", "Database"},
+     *                  default="Backend"
+     *             ),
+     *         ),
+     *     @OA\Parameter(
+     *         name="nivel_dificuldade",
+     *         in="query",
+     *         description="Nível de dificuldade",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="string",
+     *              enum={"Fácil", "Moderada", "Difícil"},
+     *              default="Moderada"
+     *         ),
+     *     ),
+     *     @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="Status da tarefa",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="string",
+     *              enum={"Aberta", "Fechada", "Cancelada"},
+     *              default="Aberta"
+     *         ),
+     *     ),
+     *     @OA\Parameter(
+     *          name="concluida",
+     *          in="query",
+     *          description="Tarefa concluída",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="boolean",
+     *              default=false
+     *          ),
+     *     ),
+     *     @OA\Parameter(
+     *         name="responsavel",
+     *         in="query",
+     *         description="Responsável pela tarefa (ID selecionado da tabela de usuários)",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="integer",
+     *              enum={1, 2, 3, 4},
+     *         ),
+     *     ),
+     *
+     *     @OA\Response(response="200", description="Tarefa salva com sucesso"),
+     *     @OA\Response(response="422", description="Atributos não podem ser processados"),
+     *     @OA\Response(response="500", description="Erro interno do servidor"),
+     *     @OA\Response(response="400", description="Erro na solicitação"),
+     *     @OA\Response(response="401", description="Não autorizado, autenticação requerida"),
+     *     @OA\Response(response="403", description="Acesso proibido"),
+     *     @OA\Response(response="404", description="Recurso não encontrado"),
+     *     @OA\Response(response="409", description="Conflito ao processar a solicitação"),
+     *     @OA\Response(response="429", description="Muitas solicitações, tente novamente mais tarde")
      * ),
      *
      */
-    public function update(Request $request, string $id)
+
+
+    public function update(Request $request, $id)
     {
         if (!$request->user()) {
             return response()->json(['message' => 'Unauthorized'], 401);

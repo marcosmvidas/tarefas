@@ -8,20 +8,21 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     */
+
+
+     /**
      * @OA\Get(
-     *     tags={"Admin - User"},
-     *     summary="Retornar uma lista de banners",
-     *     description="Retornar os objetos dos banners",
+     *     tags={"Usuário"},
+     *     summary="Retornar uma lista de usuários",
+     *     description="Retornar os objetos dos usuários",
      *     path="/api/user",
-     *     @OA\Response(response="200", description="Uma lista com banners"),
-     *     @OA\Response(response="404", description="Nenhuma lista de banners encontrada"),
+     *     @OA\Response(response="200", description="Uma lista com usuários"),
+     *     @OA\Response(response="404", description="Nenhuma lista de usuários encontrada"),
      *     @OA\Response(response="500", description="Erro interno do servidor")
      * ),
      *
-     */
-
-    /**
-     * Display a listing of the resource.
      */
     public function index()
     {

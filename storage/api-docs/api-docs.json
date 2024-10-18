@@ -28,17 +28,17 @@
         "/api/tarefa": {
             "get": {
                 "tags": [
-                    "Admin - Tarefas"
+                    "Tarefa"
                 ],
-                "summary": "Retornar uma lista de banners",
-                "description": "Retornar os objetos dos banners",
+                "summary": "Retornar uma lista das tarefas",
+                "description": "Retornar os objetos dos tarefas",
                 "operationId": "a79e012fce138fc62b731aae394afd11",
                 "responses": {
                     "200": {
-                        "description": "Uma lista com banners"
+                        "description": "Uma lista com tarefas"
                     },
                     "404": {
-                        "description": "Nenhuma lista de banners encontrada"
+                        "description": "Nenhuma lista de tarefas encontrada"
                     },
                     "500": {
                         "description": "Erro interno do servidor"
@@ -49,17 +49,148 @@
         "/api/tarefa/{id}": {
             "put": {
                 "tags": [
-                    "Admin - Tarefas"
+                    "Tarefa"
                 ],
-                "summary": "Retornar uma lista de banners",
-                "description": "Retornar os objetos dos banners",
+                "summary": "Edita uma tarefa",
+                "description": "Retornar os objetos da tarefa",
                 "operationId": "67cd449521a31562fafdca4c490d2ef8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Descrição da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "str"
+                        }
+                    },
+                    {
+                        "name": "tipo_desenvolvimento",
+                        "in": "query",
+                        "description": "Tipo de desenvolvimento",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "Backend",
+                            "enum": [
+                                "Backend",
+                                "Frontend",
+                                "Database"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "nivel_dificuldade",
+                        "in": "query",
+                        "description": "Nível de dificuldade",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "Moderada",
+                            "enum": [
+                                "Fácil",
+                                "Moderada",
+                                "Difícil"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Status da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "Aberta",
+                            "enum": [
+                                "Aberta",
+                                "Fechada",
+                                "Cancelada"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "concluida",
+                        "in": "query",
+                        "description": "Tarefa concluída",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "responsavel",
+                        "in": "query",
+                        "description": "Responsável pela tarefa (ID selecionado da tabela de usuários)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Uma lista com banners"
+                        "description": "Tarefa salva com sucesso"
+                    },
+                    "422": {
+                        "description": "Atributos não podem ser processados"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    },
+                    "400": {
+                        "description": "Erro na solicitação"
+                    },
+                    "401": {
+                        "description": "Não autorizado, autenticação requerida"
+                    },
+                    "403": {
+                        "description": "Acesso proibido"
                     },
                     "404": {
-                        "description": "Nenhuma lista de banners encontrada"
+                        "description": "Recurso não encontrado"
+                    },
+                    "409": {
+                        "description": "Conflito ao processar a solicitação"
+                    },
+                    "429": {
+                        "description": "Muitas solicitações, tente novamente mais tarde"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "Usuário"
+                ],
+                "summary": "Retornar uma lista de usuários",
+                "description": "Retornar os objetos dos usuários",
+                "operationId": "971db9bc974c0e607288cfe7ecc10096",
+                "responses": {
+                    "200": {
+                        "description": "Uma lista com usuários"
+                    },
+                    "404": {
+                        "description": "Nenhuma lista de usuários encontrada"
                     },
                     "500": {
                         "description": "Erro interno do servidor"
@@ -79,8 +210,12 @@
     },
     "tags": [
         {
-            "name": "Admin - Tarefas",
-            "description": "Admin - Tarefas"
+            "name": "Tarefa",
+            "description": "Tarefa"
+        },
+        {
+            "name": "Usuário",
+            "description": "Usuário"
         }
     ]
 }

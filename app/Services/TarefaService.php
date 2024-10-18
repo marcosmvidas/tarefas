@@ -15,7 +15,6 @@ class TarefaService
 
     public function createTarefa($data, $userId)
     {
-        // Usar o serviço de validação
         $validatedData = $this->validator->validate($data);
 
         return Tarefa::create(array_merge($validatedData, [
@@ -35,7 +34,6 @@ class TarefaService
 
     public function updateTarefa(Tarefa $tarefa, $data)
     {
-        // Usar o serviço de validação
         $validatedData = $this->validator->validate($data);
 
         $tarefa->update($validatedData);
